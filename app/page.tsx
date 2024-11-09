@@ -1,14 +1,13 @@
 "use client"
-
 import { useState } from "react";
 import { MarkdownEditor } from "@/components/markdown-editor";
 import { MindmapViewer } from "@/components/mindmap-viewer";
 import { parseMarkdownToMindmap } from "@/lib/markdown-to-mindmap";
 import { BrainCircuit, BrainCog } from "lucide-react";
-import { Edge } from "reactflow";
+import { Edge, Node as ReactFlowNode } from "reactflow";
 
 export default function Home() {
-  const [nodes, setNodes] = useState<Node[]>([]);
+  const [nodes, setNodes] = useState<ReactFlowNode[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
 
   const handleMarkdownChange = (markdown: string) => {
