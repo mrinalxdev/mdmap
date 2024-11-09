@@ -1,5 +1,5 @@
 import { Node, Edge } from 'reactflow';
-import { marked } from 'marked';
+import { marked, Tokens } from 'marked';
 
 interface MindmapNode {
   id: string;
@@ -11,12 +11,10 @@ interface MindmapNode {
 function calculateNodePosition(nodes: MindmapNode[], nodeId: string, levelSpacing = 250, nodeSpacing = 120) {
   const node = nodes.find(n => n.id === nodeId);
   if (!node) return { x: 0, y: 0 };
-
   const x = node.level * levelSpacing;
   const siblings = nodes.filter(n => n.level === node.level);
   const index = siblings.findIndex(n => n.id === nodeId);
   const y = index * nodeSpacing - (siblings.length - 1) * nodeSpacing / 2;
-
   return { x, y };
 }
 
@@ -32,14 +30,15 @@ export function parseMarkdownToMindmap(markdown: string): { nodes: Node[]; edges
     return `node-${nodeCounter++}`;
   }
 
-  function processToken(token: marked.Token, level: number) {
+  function processToken(token: Tokens.Generic, level: number) {
     if (token.type === 'heading') {
+      const headingToken = token as Tokens.Heading;
       const nodeId = createNodeId();
       const parentId = currentParentStack[level - 1];
 
       mindmapNodes[nodeId] = {
         id: nodeId,
-        text: token.text,
+        text: headingToken.text,
         level,
         children: [],
       };
@@ -57,7 +56,8 @@ export function parseMarkdownToMindmap(markdown: string): { nodes: Node[]; edges
       currentParentStack[level] = nodeId;
       currentParentStack.splice(level + 1);
     } else if (token.type === 'list') {
-      token.items.forEach((item) => {
+      const listToken = token as Tokens.List;
+      listToken.items.forEach((item) => {
         const nodeId = createNodeId();
         const parentId = currentParentStack[currentParentStack.length - 1];
 
@@ -83,7 +83,7 @@ export function parseMarkdownToMindmap(markdown: string): { nodes: Node[]; edges
 
   tokens.forEach((token) => {
     if (token.type === 'heading') {
-      processToken(token, token.depth);
+      processToken(token, (token as Tokens.Heading).depth);
     } else if (token.type === 'list') {
       processToken(token, currentParentStack.length);
     }
