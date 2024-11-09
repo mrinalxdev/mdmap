@@ -1,14 +1,15 @@
-"use client";
+"use client"
 
 import { useState } from "react";
 import { MarkdownEditor } from "@/components/markdown-editor";
 import { MindmapViewer } from "@/components/mindmap-viewer";
 import { parseMarkdownToMindmap } from "@/lib/markdown-to-mindmap";
 import { BrainCircuit, BrainCog } from "lucide-react";
+import { Edge } from "reactflow";
 
 export default function Home() {
-  const [nodes, setNodes] = useState([]);
-  const [edges, setEdges] = useState([]);
+  const [nodes, setNodes] = useState<Node[]>([]);
+  const [edges, setEdges] = useState<Edge[]>([]);
 
   const handleMarkdownChange = (markdown: string) => {
     const { nodes: newNodes, edges: newEdges } = parseMarkdownToMindmap(markdown);
@@ -21,7 +22,7 @@ export default function Home() {
       <div className="container mx-auto p-4">
         <div className="flex flex-col items-center justify-center mb-8 pt-8 space-y-2">
           <div className="flex items-center justify-center p-3 bg-primary/5 rounded-full">
-            <BrainCog  className="h-10 w-10 text-primary" />
+            <BrainCog className="h-10 w-10 text-primary" />
           </div>
           <h1 className="text-6xl font-bold text-center font-title">
             MdxMap
