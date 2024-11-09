@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.mindmap-node {
+  @apply px-6 py-3 shadow-lg rounded-xl border-2 bg-card text-card-foreground 
+         transition-all duration-300 hover:scale-105 hover:shadow-xl 
+         hover:border-primary/50 cursor-pointer font-medium
+         relative z-10;
+}
+
+.mindmap-node.root {
+  @apply bg-primary text-primary-foreground border-primary 
+         hover:bg-primary/90 hover:border-primary;
+}
+
+.react-flow__edge {
+  @apply !z-0;
+}
+
+.react-flow__edge-path {
+  @apply stroke-[3];
+}
+
+.react-flow__controls {
+  @apply !bg-background !border-border !rounded-lg !shadow-lg;
+}
+
+.react-flow__controls-button {
+  @apply !bg-background !border-border !text-foreground 
+         hover:!bg-muted transition-colors duration-200;
+}
+
+.react-flow__panel {
+  @apply bg-transparent;
+}
+
+.react-flow__attribution {
+  @apply hidden;
+}
+
+.react-flow__background {
+  @apply bg-background;
+}
+
+.react-flow__minimap {
+  @apply bg-background border border-border rounded-lg shadow-lg;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  @apply !stroke-primary;
+}
+
+.react-flow__edge-path {
+  @apply !stroke-primary/40;
+}
+
+.react-flow__edge.animated .react-flow__edge-path {
+  stroke-dasharray: 5;
+  animation: flowAnimation 1s linear infinite;
+}
+
+@keyframes flowAnimation {
+  from {
+    stroke-dashoffset: 10;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
